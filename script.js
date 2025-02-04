@@ -7,7 +7,6 @@ function speak(text){
     text_speak.rate=1
     text_speak.pitch=1
     text_speak.volume=1
-    // text_speak.lang="hi-GB"
     window.speechSynthesis.speak(text_speak)
 }
 
@@ -87,7 +86,7 @@ function takeCommand(message){
     else if(message.includes("open whatsapp"))
         {
         speak("opening whatsapp..")
-        window.open("whatsapp://")
+        window.open("https://web.whatsapp.com/")
         }
     else if(message.includes("open chatgpt"))
         {
