@@ -21,7 +21,9 @@ function wishMe() {
         speak("Good Evening Sir");
     }
 }
-
+wishMe{
+console.log(hours)
+}
 let speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = new speechRecognition();
 
