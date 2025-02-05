@@ -16,7 +16,7 @@ function wishMe() {
     if (hours >= 0 && hours < 12) {
         speak("Good Morning Sir");
     } else if (hours >= 12 && hours < 16) {
-        speak("Good afternoon Sir");
+        speak("Good Afternoon Sir");
     } else {
         speak("Good Evening Sir");
     }
@@ -39,9 +39,15 @@ recognition.onresult = (event) => {
 };
 
 btn.addEventListener("click", () => {
-    recognition.start();
-    voice.style.display = "block";
-    btn.style.display = "none";
+    checkMicrophonePermission()
+        .then(() => {
+            recognition.start();
+            voice.style.display = "block";
+            btn.style.display = "none";
+        })
+        .catch(() => {
+            alert("Microphone access is required for this feature. Please allow microphone access in your browser settings.");
+        });
 });
 
 function takeCommand(message) {
@@ -49,38 +55,38 @@ function takeCommand(message) {
     btn.style.display = "flex";
 
     if (message.includes("hello") || message.includes("hey") || message.includes("hi") || message.includes("hii")) {
-        speak("hello sir,what can i help you?");
+        speak("Hello sir, what can I help you?");
     } else if (message.includes("hello dav") || message.includes("hey dav") || message.includes("hi dav")) {
-        speak("hello sir, what can I help you?");
+        speak("Hello sir, what can I help you?");
     } else if (message.includes("who are you")) {
-        speak("i am virtual assistant ,created by Vikash Gupta");
+        speak("I am a virtual assistant, created by Vikash Gupta");
     } else if (message.includes("what is your name")) {
-        speak("My name is dav");
+        speak("My name is Dav");
     } else if (message.includes("what is your date of birth")) {
-        speak("i was genrated on four january two thoushnad twenty five ,created by Vikash Gupta");
+        speak("I was generated on January 4, 2025, created by Vikash Gupta");
     } else if (message.includes("open youtube")) {
-        speak("opening youtube...");
+        speak("Opening YouTube...");
         window.open("https://youtube.com/", "_blank");
     } else if (message.includes("open google")) {
-        speak("opening google...");
+        speak("Opening Google...");
         window.open("https://google.com/", "_blank");
     } else if (message.includes("open facebook")) {
-        speak("opening facebook...");
+        speak("Opening Facebook...");
         window.open("https://facebook.com/", "_blank");
     } else if (message.includes("open instagram")) {
-        speak("opening instagram...");
+        speak("Opening Instagram...");
         window.open("https://instagram.com/", "_blank");
     } else if (message.includes("open calculator")) {
-        speak("opening calculator..");
+        speak("Opening calculator...");
         window.open("calculator://");
     } else if (message.includes("open whatsapp")) {
-        speak("opening whatsapp..");
+        speak("Opening WhatsApp...");
         window.open("https://web.whatsapp.com/");
     } else if (message.includes("open chatgpt")) {
-        speak("opening chatgpt..");
+        speak("Opening ChatGPT...");
         window.open("https://chatgpt.com/", "_blank");
     } else if (message.includes("open deepseek")) {
-        speak("opening deepseek..");
+        speak("Opening DeepSeek...");
         window.open("https://www.deepseek.com/", "_blank");
     } else if (message.includes("time")) {
         let time = new Date().toLocaleString(undefined, { hour: "numeric", minute: "numeric" });
@@ -89,10 +95,25 @@ function takeCommand(message) {
         let date = new Date().toLocaleString(undefined, { day: "numeric", month: "short" });
         speak(date);
     } else {
-        let finalText = "this is what i found on internet regarding " + (message.replace("dav", "") || message.replace("dav", ""));
+        let finalText = "This is what I found on the internet regarding " + (message.replace("dav", "") || message.replace("dav", ""));
         speak(finalText);
         window.open(`https://www.google.com/search?q=${message.replace("dav", "")}`, "_blank");
     }
+}
+
+// Check for microphone permission
+function checkMicrophonePermission() {
+    return new Promise((resolve, reject) => {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then((stream) => {
+                resolve();
+                // Close the stream to release the microphone
+                stream.getTracks().forEach(track => track.stop());
+            })
+            .catch(() => {
+                reject();
+            });
+    });
 }
 
 // Inactivity timeout management
