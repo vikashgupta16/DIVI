@@ -91,7 +91,7 @@ h1 {
     }
 
     #name, #va {
-        font-size: 55px; /* Larger text for big screens */
+        font-size: 45px; /* Larger text for big screens */
     }
 
     #btn {
