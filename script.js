@@ -2,8 +2,15 @@ let btn = document.querySelector("#btn");
 let content = document.querySelector("#content");
 let voice = document.querySelector("#voice");
 
-function speak(text) {
+function speak(text)  {
     let text_speak = new SpeechSynthesisUtterance(text);
+    
+    let voices = window.speechSynthesis.getVoices();
+    
+    // Select a male voice if available, otherwise use the first available voice
+    let selectedVoice = voices.find(voice => voice.name.toLowerCase().includes('male')) || voices[0];
+    text_speak.voice = selectedVoice;
+
     text_speak.rate = 1;
     text_speak.pitch = 1;
     text_speak.volume = 1;
