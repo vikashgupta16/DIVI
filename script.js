@@ -48,7 +48,7 @@ function takeCommand(message) {
     voice.style.display = "none";
     btn.style.display = "flex";
 
-    if (message.includes("hello") || message.includes("hey")) {
+    if (message.includes("hello") || message.includes("hey") || message.includes("hi") || message.includes("hii")) {
         speak("hello sir,what can i help you?");
     } else if (message.includes("hello dav") || message.includes("hey dav") || message.includes("hi dav")) {
         speak("hello sir, what can I help you?");
@@ -56,7 +56,7 @@ function takeCommand(message) {
         speak("i am virtual assistant ,created by Vikash Gupta");
     } else if (message.includes("what is your name")) {
         speak("My name is dav");
-    } else if (message.includes("what is date of birth")) {
+    } else if (message.includes("what is your date of birth")) {
         speak("i was genrated on four january two thoushnad twenty five ,created by Vikash Gupta");
     } else if (message.includes("open youtube")) {
         speak("opening youtube...");
