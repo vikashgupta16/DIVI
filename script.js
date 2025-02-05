@@ -21,6 +21,7 @@ function wishMe() {
         speak("Good Evening Sir");
     }
 }
+window.onload = wishMe;
 
 let speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = new speechRecognition();
