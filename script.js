@@ -1,107 +1,88 @@
-let btn = document.querySelector("#btn");
-let content = document.querySelector("#content");
-let voice = document.querySelector("#voice");
+let btn=document.querySelector("#btn")
+let content=document.querySelector("#content")
+let voice=document.querySelector("#voice")
 
-function speak(text) {
-    let text_speak = new SpeechSynthesisUtterance(text);
-    let voices = window.speechSynthesis.getVoices();
-
-    function setVoice() {
-        voices = window.speechSynthesis.getVoices();
-        let selectedVoice = voices.find(v => v.name.toLowerCase().includes('male')) || voices[0];
-        text_speak.voice = selectedVoice;
-        text_speak.rate = 1;
-        text_speak.pitch = 1;
-        text_speak.volume = 1;
-        window.speechSynthesis.speak(text_speak);
-    }
-
-    if (voices.length > 0) {
-        setVoice();
-    } else {
-        window.speechSynthesis.onvoiceschanged = setVoice;
-    }
+function speak(text){
+    let text_speak=new SpeechSynthesisUtterance(text)
+    text_speak.rate=1
+    text_speak.pitch=1
+    text_speak.volume=1
+    text_speak.lang="hi-GB"
+    window.speechSynthesis.speak(text_speak)
 }
 
-function wishMe() {
-    let hours = new Date().getHours();
-    let greeting = hours < 12 ? "Good Morning Sir" : hours < 16 ? "Good Afternoon Sir" : "Good Evening Sir";
-    speak(greeting);
-}
-
-window.speechSynthesis.onvoiceschanged = wishMe;
-window.onload = wishMe;
-
-let speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-let recognition = new speechRecognition();
-
-recognition.onresult = (event) => {
-    let transcript = event.results[event.resultIndex][0].transcript;
-    content.innerText = transcript;
-    takeCommand(transcript.toLowerCase());
-    resetInactivityTimer();
-};
-
-btn.addEventListener("click", () => {
-    checkMicrophonePermission()
-        .then(() => {
-            recognition.start();
-            voice.style.display = "block";
-            btn.style.display = "none";
-        })
-        .catch(() => alert("Microphone access is required. Please allow it in browser settings."));
-});
-
-function takeCommand(message) {
-    voice.style.display = "none";
-    btn.style.display = "flex";
-
-    const commands = {
-        "hello": "Hello sir, what can I help you?",
-        "who are you": "I am a virtual assistant, created by Vikash Gupta",
-        "what is your name": "My name is Dav",
-        "what is your date of birth": "I was generated on January 4, 2025, created by Vikash Gupta",
-        "open youtube": "https://youtube.com/",
-        "open google": "https://google.com/",
-        "open facebook": "https://facebook.com/",
-        "open instagram": "https://instagram.com/",
-        "open whatsapp": "https://web.whatsapp.com/",
-        "open chatgpt": "https://chatgpt.com/",
-        "open deepseek": "https://www.deepseek.com/"
-    };
-
-    for (let key in commands) {
-        if (message.includes(key)) {
-            if (commands[key].startsWith("http")) {
-                speak(`Opening ${key.split(" ")[1]}...`);
-                window.open(commands[key], "_blank");
-            } else {
-                speak(commands[key]);
-            }
-            return;
-        }
+function wishMe(){
+    let day=new Date()
+    let hours=day.getHours()
+    if(hours>=0 && hours<12){
+        speak("Good Morning Sir")
     }
-
-    if (message.includes("time")) {
-        speak(new Date().toLocaleTimeString(undefined, { hour: "numeric", minute: "numeric" }));
-    } else if (message.includes("date")) {
-        speak(new Date().toLocaleDateString(undefined, { day: "numeric", month: "short" }));
-    } else {
-        let searchQuery = message.replace("dav", "").trim();
-        speak(`This is what I found on the internet regarding ${searchQuery}`);
-        window.open(`https://www.google.com/search?q=${searchQuery}`, "_blank");
+    else if(hours>=12 && hours <16){
+        speak("Good afternoon Sir")
+    }else{
+        speak("Good Evening Sir")
     }
 }
-
-function checkMicrophonePermission() {
-    return navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-            stream.getTracks().forEach(track => track.stop());
-        });
+// window.addEventListener('load',()=>{
+//     wishMe()
+// })
+let speechRecognition= window.SpeechRecognition || window.webkitSpeechRecognition 
+let recognition =new speechRecognition()
+recognition.onresult=(event)=>{
+    let currentIndex=event.resultIndex
+    let transcript=event.results[currentIndex][0].transcript
+    content.innerText=transcript
+   takeCommand(transcript.toLowerCase())
 }
 
-let inactivityTimeout;
-function resetInactivityTimer() {
-    clearTimeout(inactivityTimeout);
-    inactivityTimeout = setTimeout(() => location.reload(), 60000);
+btn.addEventListener("click",()=>{
+    recognition.start()
+    voice.style.display="block"
+    btn.style.display="none"
+})
+function takeCommand(message){
+   voice.style.display="none"
+    btn.style.display="flex"
+    if(message.includes("hello")||message.includes("hey")){
+        speak("hello sir,what can i help you?")
+    }
+    else if(message.includes("who are you")){
+        speak("i am virtual assistant ,created by Vikash gupta")
+    }else if(message.includes("open youtube")){
+        speak("opening youtube...")
+        window.open("https://youtube.com/","_blank")
+    }
+    else if(message.includes("open google")){
+        speak("opening google...")
+        window.open("https://google.com/","_blank")
+    }
+    else if(message.includes("open facebook")){
+        speak("opening facebook...")
+        window.open("https://facebook.com/","_blank")
+    }
+    else if(message.includes("open instagram")){
+        speak("opening instagram...")
+        window.open("https://instagram.com/","_blank")
+    }
+    else if(message.includes("open calculator")){
+        speak("opening calculator..")
+        window.open("calculator://")
+    }
+    else if(message.includes("open whatsapp")){
+        speak("opening whatsapp..")
+        window.open("whatsapp://")
+    }
+    else if(message.includes("time")){
+      let time=new Date().toLocaleString(undefined,{hour:"numeric",minute:"numeric"})
+      speak(time)
+    }
+    else if(message.includes("date")){
+        let date=new Date().toLocaleString(undefined,{day:"numeric",month:"short"})
+        speak(date)
+      }
+    else{
+        let finalText="this is what i found on internet regarding" + message.replace("divi","") || message.replace("divi","")
+        speak(finalText)
+        window.open(`https://www.google.com/search?q=${message.replace("divi","")}`,"_blank")
+    }
 }
