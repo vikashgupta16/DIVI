@@ -1,99 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Poppins&display=swap');
-
-/* Global reset and box-sizing */
-* {
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
-body {
+body{
     width: 100%;
     height: 100%;
     background-color: black;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap:30px;
     flex-direction: column;
-    gap: 30px;
 }
-
-#logo {
-    width: 20vw; /* Logo width adjusts dynamically based on viewport width */
+#logo{
+    width: 20vw;
 }
-
-h1 {
-    color: rgb(255, 255, 255);
-    font-family: "Poppins", serif;
+h1{
+    color: aliceblue;
+    font-family: "Protest Guerrilla", sans-serif;
 }
-
-#name {
-    color: rgb(141, 245, 210);
+#name{
+    color:rgb(212, 43, 122);
     font-size: 45px;
 }
-
-#va {
-    color: rgb(238, 96, 176);
-    font-size: 45px;
+#va{
+    color:rgb(43, 206, 212);
+    font-size: 45px; 
 }
-
-#voice {
-    width: 150px;
+#voice{
+    width: 100px;
     display: none;
+   
 }
-
-#btn {
-    width: 30%;
-    background: linear-gradient(to right, rgb(255, 116, 243), rgb(115, 239, 255));
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 17px;
-    border-radius: 20px;
-    color: white;
-    box-shadow: 2px 2px 5px rgb(251, 114, 239), 2px 2px 5px rgb(0, 225, 255);
-    border: none;
-    transition: all 0.5s;
-    cursor: pointer;
+#btn{
+width: 30%;
+background: linear-gradient(to right,rgb(21, 145, 207),rgb(201, 41, 116));
+padding: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+font-size: 20px;
+border-radius: 20px;
+color: white;
+box-shadow: 2px 2px 10px rgb(21, 145, 207),2px 2px 10px rgb(201, 41, 116);
+border: none;
+transition: all 0.5s;
+cursor: pointer;
 }
-
-#btn:hover {
-    box-shadow: 2px 2px 10px rgb(251, 114, 239), 2px 2px 10px rgb(0, 225, 255);
+#btn:hover{
+    box-shadow: 2px 2px 20px rgb(21, 145, 207),2px 2px 20px rgb(201, 41, 116);
     letter-spacing: 2px;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
+/* Mobile devices */
+@media (max-width: 600px) {
     #logo {
-        width: 40vw; /* Increase logo size for smaller screens */
+        width: 50vw;
     }
-
+    h1 {
+        font-size: 24px;
+    }
     #name, #va {
-        font-size: 36px; /* Slightly smaller font size for mobile */
+        font-size: 24px;
+        text-align: center;
+        width: 100%;
     }
-
     #btn {
-        width: 60%; /* Make button larger on mobile for easier tapping */
-        font-size: 18px; /* Adjust button font size */
-    }
-
-    body {
-        gap: 20px; /* Reduced gap between elements on mobile */
+        width: 50%;
+        font-size: 16px;
     }
 }
-
-/* Large screen adjustments (e.g., tablets, desktops) */
-@media (min-width: 1024px) {
-    #logo {
-        width: 15vw; /* Reduce logo size on larger screens */
-    }
-
-    #name, #va {
-        font-size: 45px; /* Larger text for big screens */
-    }
-
     #btn {
         width: 25%; /* Slightly smaller button on larger screens */
     }
