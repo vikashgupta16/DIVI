@@ -4,49 +4,39 @@ let voice = document.querySelector("#voice");
 
 function speak(text) {
     let text_speak = new SpeechSynthesisUtterance(text);
+    let voices = [];
 
     function setVoice() {
-        let voices = window.speechSynthesis.getVoices();
-        
+        voices = window.speechSynthesis.getVoices();
         if (voices.length === 0) {
-            setTimeout(setVoice, 100); // Retry if voices are not loaded
+            setTimeout(setVoice, 100);
             return;
         }
 
-        // Prefer a male voice
         let selectedVoice = voices.find(voice => voice.name.toLowerCase().includes('male')) || voices[0];
         text_speak.voice = selectedVoice;
-
         text_speak.rate = 1;
         text_speak.pitch = 1;
         text_speak.volume = 1;
-        
         window.speechSynthesis.speak(text_speak);
     }
 
-    setVoice();
+    if (voices.length === 0) {
+        window.speechSynthesis.onvoiceschanged = setVoice;
+    } else {
+        setVoice();
+    }
 }
 
 function wishMe() {
     let day = new Date();
     let hours = day.getHours();
-    let greeting = "";
+    let greeting = hours < 12 ? "Good Morning Sir" : hours < 16 ? "Good Afternoon Sir" : "Good Evening Sir";
 
-    if (hours >= 0 && hours < 12) {
-        greeting = "Good Morning Sir";
-    } else if (hours >= 12 && hours < 16) {
-        greeting = "Good Afternoon Sir";
-    } else {
-        greeting = "Good Evening Sir";
-    }
-
-    window.speechSynthesis.onvoiceschanged = () => {
-        speak(greeting);
-    };
-
-    // If voices are already available, speak immediately
     if (window.speechSynthesis.getVoices().length > 0) {
         speak(greeting);
+    } else {
+        window.speechSynthesis.onvoiceschanged = () => speak(greeting);
     }
 }
 window.onload = wishMe;
@@ -54,15 +44,10 @@ window.onload = wishMe;
 let speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = new speechRecognition();
 
-let inactivityTimeout;
-let reloadTimeout;
-
 recognition.onresult = (event) => {
-    let currentIndex = event.resultIndex;
-    let transcript = event.results[currentIndex][0].transcript;
+    let transcript = event.results[event.resultIndex][0].transcript;
     content.innerText = transcript;
     takeCommand(transcript.toLowerCase());
-
     resetInactivityTimer();
 };
 
@@ -73,92 +58,59 @@ btn.addEventListener("click", () => {
             voice.style.display = "block";
             btn.style.display = "none";
         })
-        .catch(() => {
-            alert("Microphone access is required for this feature. Please allow microphone access in your browser settings.");
-        });
+        .catch(() => alert("Microphone access is required. Please allow it in browser settings."));
 });
 
 function takeCommand(message) {
     voice.style.display = "none";
     btn.style.display = "flex";
 
-    if (message.includes("hello") || message.includes("hey") || message.includes("hi") || message.includes("hii")) {
-        speak("Hello sir, what can I help you?");
-    } else if (message.includes("hello dav") || message.includes("hey dav") || message.includes("hi dav")) {
-        speak("Hello sir, what can I help you?");
-    } else if (message.includes("who are you")) {
-        speak("I am a virtual assistant, created by Vikash Gupta");
-    } else if (message.includes("what is your name")) {
-        speak("My name is Dav");
-    } else if (message.includes("what is your date of birth")) {
-        speak("I was generated on January 4, 2025, created by Vikash Gupta");
-    } else if (message.includes("open youtube")) {
-        speak("Opening YouTube...");
-        window.open("https://youtube.com/", "_blank");
-    } else if (message.includes("open google")) {
-        speak("Opening Google...");
-        window.open("https://google.com/", "_blank");
-    } else if (message.includes("open facebook")) {
-        speak("Opening Facebook...");
-        window.open("https://facebook.com/", "_blank");
-    } else if (message.includes("open instagram")) {
-        speak("Opening Instagram...");
-        window.open("https://instagram.com/", "_blank");
-    } else if (message.includes("open whatsapp")) {
-        speak("Opening WhatsApp...");
-        window.open("https://web.whatsapp.com/");
-    } else if (message.includes("open chatgpt")) {
-        speak("Opening ChatGPT...");
-        window.open("https://chatgpt.com/", "_blank");
-    } else if (message.includes("open deepseek")) {
-        speak("Opening DeepSeek...");
-        window.open("https://www.deepseek.com/", "_blank");
-    } else if (message.includes("time")) {
-        let time = new Date().toLocaleString(undefined, { hour: "numeric", minute: "numeric" });
-        speak(time);
+    const commands = {
+        "hello": "Hello sir, what can I help you?",
+        "who are you": "I am a virtual assistant, created by Vikash Gupta",
+        "what is your name": "My name is Dav",
+        "what is your date of birth": "I was generated on January 4, 2025, created by Vikash Gupta",
+        "open youtube": "https://youtube.com/",
+        "open google": "https://google.com/",
+        "open facebook": "https://facebook.com/",
+        "open instagram": "https://instagram.com/",
+        "open whatsapp": "https://web.whatsapp.com/",
+        "open chatgpt": "https://chatgpt.com/",
+        "open deepseek": "https://www.deepseek.com/"
+    };
+
+    for (let key in commands) {
+        if (message.includes(key)) {
+            if (commands[key].startsWith("http")) {
+                speak(`Opening ${key.split(" ")[1]}...`);
+                window.open(commands[key], "_blank");
+            } else {
+                speak(commands[key]);
+            }
+            return;
+        }
+    }
+
+    if (message.includes("time")) {
+        speak(new Date().toLocaleTimeString(undefined, { hour: "numeric", minute: "numeric" }));
     } else if (message.includes("date")) {
-        let date = new Date().toLocaleString(undefined, { day: "numeric", month: "short" });
-        speak(date);
+        speak(new Date().toLocaleDateString(undefined, { day: "numeric", month: "short" }));
     } else {
-        let finalText = "This is what I found on the internet regarding " + (message.replace("dav", "") || message.replace("dav", ""));
-        speak(finalText);
-        window.open(`https://www.google.com/search?q=${message.replace("dav", "")}`, "_blank");
+        let searchQuery = message.replace("dav", "").trim();
+        speak(`This is what I found on the internet regarding ${searchQuery}`);
+        window.open(`https://www.google.com/search?q=${searchQuery}`, "_blank");
     }
 }
 
-// Check for microphone permission
 function checkMicrophonePermission() {
-    return new Promise((resolve, reject) => {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then((stream) => {
-                resolve();
-                // Close the stream to release the microphone
-                stream.getTracks().forEach(track => track.stop());
-            })
-            .catch(() => {
-                reject();
-            });
-    });
+    return navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            stream.getTracks().forEach(track => track.stop());
+        });
 }
 
-// Inactivity timeout management
+let inactivityTimeout;
 function resetInactivityTimer() {
-    // Clear previous timeouts if any
     clearTimeout(inactivityTimeout);
-    clearTimeout(reloadTimeout);
-
-    // Set a new inactivity timeout (1 minute)
-    inactivityTimeout = setTimeout(() => {
-        reloadPage();
-    }, 60000); // Reload after 1 minute of inactivity
-
-    // Also reset another timeout for 15 seconds inactivity from microphone
-    reloadTimeout = setTimeout(() => {
-        reloadPage();
-    }, 15000); // Reload after 15 seconds of inactivity from microphone
-}
-
-// Reload the page
-function reloadPage() {
-    location.reload(); // Reload the page
+    inactivityTimeout = setTimeout(() => location.reload(), 60000);
 }
