@@ -1,79 +1,121 @@
 @import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
+
+body {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background-color: black;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap:30px;
+    gap: 20px;
     flex-direction: column;
+    padding: 20px;
 }
-#logo{
+
+#logo {
     width: 20vw;
+    max-width: 150px;
+    min-width: 100px;
 }
-h1{
+
+h1 {
     color: aliceblue;
     font-family: "Protest Guerrilla", sans-serif;
+    text-align: center;
 }
-#name{
-    color:rgb(212, 43, 122);
+
+#name {
+    color: rgb(212, 43, 122);
     font-size: 45px;
 }
-#va{
-    color:rgb(43, 206, 212);
-    font-size: 45px; 
+
+#va {
+    color: rgb(43, 206, 212);
+    font-size: 45px;
 }
-#voice{
-    width: 100px;
+
+#voice {
+    width: 80px;
     display: none;
-   
 }
-#btn{
-width: 30%;
-background: linear-gradient(to right,rgb(21, 145, 207),rgb(201, 41, 116));
-padding: 10px;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 10px;
-font-size: 20px;
-border-radius: 20px;
-color: white;
-box-shadow: 2px 2px 10px rgb(21, 145, 207),2px 2px 10px rgb(201, 41, 116);
-border: none;
-transition: all 0.5s;
-cursor: pointer;
+
+#btn {
+    width: 30%;
+    min-width: 250px;
+    max-width: 400px;
+    background: linear-gradient(to right, rgb(21, 145, 207), rgb(201, 41, 116));
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 20px;
+    border-radius: 20px;
+    color: white;
+    box-shadow: 2px 2px 10px rgb(21, 145, 207), 2px 2px 10px rgb(201, 41, 116);
+    border: none;
+    transition: all 0.5s;
+    cursor: pointer;
 }
-#btn:hover{
-    box-shadow: 2px 2px 20px rgb(21, 145, 207),2px 2px 20px rgb(201, 41, 116);
+
+#btn:hover {
+    box-shadow: 2px 2px 20px rgb(21, 145, 207), 2px 2px 20px rgb(201, 41, 116);
     letter-spacing: 2px;
 }
 
-/* Mobile devices */
-@media (max-width: 600px) {
+/* Mobile Styles */
+@media (max-width: 768px) {
+    body {
+        gap: 15px;
+        padding: 15px;
+    }
+
     #logo {
-        width: 50vw;
-    }
-    h1 {
-        font-size: 24px;
-    }
-    #name, #va {
-        font-size: 24px;
-        text-align: center;
-        width: 100%;
-    }
-    #btn {
         width: 50%;
-        font-size: 16px;
+        max-width: 200px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    #name, #va {
+        font-size: 2rem;
+    }
+
+    #btn {
+        width: 90%;
+        padding: 20px;
+        font-size: 18px;
+        border-radius: 15px;
+    }
+
+    #btn:hover {
+        letter-spacing: normal;
+        box-shadow: 2px 2px 15px rgb(21, 145, 207), 2px 2px 15px rgb(201, 41, 116);
+    }
+
+    #voice {
+        width: 60px;
     }
 }
+
+@media (max-width: 480px) {
+    #name, #va {
+        font-size: 1.8rem;
+    }
+
     #btn {
-        width: 25%; /* Slightly smaller button on larger screens */
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 1.3rem;
     }
 }
