@@ -105,3 +105,32 @@ function tellJoke() {
         })
         .catch(() => speak("Sorry, I couldn't fetch a joke for you."));
 }
+
+// Check for microphone permission
+function checkMicrophonePermission() {
+    return new Promise((resolve, reject) => {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then((stream) => {
+                resolve();
+                // Close the stream to release the microphone
+                stream.getTracks().forEach(track => track.stop());
+            })
+            .catch(() => {
+                reject();
+            });
+    });
+}
+
+// Inactivity timeout management
+function resetInactivityTimer() {
+    clearTimeout(reloadTimeout);
+    // Also reset another timeout for 15 seconds inactivity from microphone
+    reloadTimeout = setTimeout(() => {
+        reloadPage();
+    }, 15000); // Reload after 15 seconds of inactivity from microphone
+}
+
+// Reload the page
+function reloadPage() {
+    location.reload(); // Reload the page
+}
