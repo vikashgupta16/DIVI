@@ -1,6 +1,6 @@
-# DAV 
+# DIVI
 
-Welcome to the **DAV** repository! This project is a web-based platform designed for [Fun & Voice Gentared Search].
+Welcome to the **DIVI** repository! This project is a web-based platform designed for [Fun & Voice Gentared Search].
 You can visit the live version [here](https://vikashgupta16.github.io/DAV/).
 
 ## Features
@@ -16,7 +16,7 @@ You can visit the live version [here](https://vikashgupta16.github.io/DAV/).
 - [Basic JavaScript used for date time wishMe and speechRecognition]
 
 ## How To Use
-You must give voice access to your browser so that CAD can Hear your voice
+You must give voice access to your browser so that DIVI can Hear your voice
 If you are uisng in mobile you must give permission to your application for miq.
 Best Works with Microsoft Edge & Chrome[Mostly Tab/Laptop/PC]
 
@@ -30,11 +30,11 @@ If you want to run this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/vikashgupta16/DAV.git
+   git clone https://github.com/vikashgupta16/DIVI.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd DAV
+   cd DIVI
    ```
 3. Open `index.html` in your browser.
 
