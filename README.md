@@ -1,7 +1,7 @@
 # DIVI
 
 Welcome to the **DIVI** repository! This project is a web-based platform designed for [Fun & Voice Gentared Search].
-You can visit the live version [here](https://vikashgupta16.github.io/DAV/).
+You can visit the live version [here](https://vikashgupta16.github.io/DIVI/).
 
 ## Features
 - Responsive and user-friendly design
