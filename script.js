@@ -2,30 +2,51 @@ let btn = document.querySelector("#btn");
 let content = document.querySelector("#content");
 let voice = document.querySelector("#voice");
 
-function speak(text)  {
+function speak(text) {
     let text_speak = new SpeechSynthesisUtterance(text);
-    
-    let voices = window.speechSynthesis.getVoices();
-    
-    // Select a male voice if available, otherwise use the first available voice
-    let selectedVoice = voices.find(voice => voice.name.toLowerCase().includes('male')) || voices[0];
-    text_speak.voice = selectedVoice;
 
-    text_speak.rate = 1;
-    text_speak.pitch = 1;
-    text_speak.volume = 1;
-    window.speechSynthesis.speak(text_speak);
+    function setVoice() {
+        let voices = window.speechSynthesis.getVoices();
+        
+        if (voices.length === 0) {
+            setTimeout(setVoice, 100); // Retry if voices are not loaded
+            return;
+        }
+
+        // Prefer a male voice
+        let selectedVoice = voices.find(voice => voice.name.toLowerCase().includes('male')) || voices[0];
+        text_speak.voice = selectedVoice;
+
+        text_speak.rate = 1;
+        text_speak.pitch = 1;
+        text_speak.volume = 1;
+        
+        window.speechSynthesis.speak(text_speak);
+    }
+
+    setVoice();
 }
 
 function wishMe() {
     let day = new Date();
     let hours = day.getHours();
+    let greeting = "";
+
     if (hours >= 0 && hours < 12) {
-        speak("Good Morning Sir");
+        greeting = "Good Morning Sir";
     } else if (hours >= 12 && hours < 16) {
-        speak("Good Afternoon Sir");
+        greeting = "Good Afternoon Sir";
     } else {
-        speak("Good Evening Sir");
+        greeting = "Good Evening Sir";
+    }
+
+    window.speechSynthesis.onvoiceschanged = () => {
+        speak(greeting);
+    };
+
+    // If voices are already available, speak immediately
+    if (window.speechSynthesis.getVoices().length > 0) {
+        speak(greeting);
     }
 }
 window.onload = wishMe;
@@ -83,9 +104,6 @@ function takeCommand(message) {
     } else if (message.includes("open instagram")) {
         speak("Opening Instagram...");
         window.open("https://instagram.com/", "_blank");
-    } else if (message.includes("open calculator")) {
-        speak("Opening calculator...");
-        window.open("calculator://");
     } else if (message.includes("open whatsapp")) {
         speak("Opening WhatsApp...");
         window.open("https://web.whatsapp.com/");
