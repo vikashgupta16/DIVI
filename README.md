@@ -20,6 +20,10 @@ You must give voice access to your browser so that CAD can Hear your voice
 If you are uisng in mobile you must give permission to your application for miq.
 Best Works with Microsoft Edge & Chrome[Mostly Tab/Laptop/PC]
 
+## Replies 
+It's not AI and it doesn't not contain any API so it can't work like real ChatGpt or other AI platform. 
+It can reply some basics about himself and date, time. Or if it doesn't match any questions so it would take it you to Goggle platform with your question typed and reply to your answer.
+
 
 ## Installation
 If you want to run this project locally, follow these steps:
