@@ -4,16 +4,11 @@ let voice = document.querySelector("#voice");
 
 function speak(text) {
     let text_speak = new SpeechSynthesisUtterance(text);
-    let voices = [];
+    let voices = window.speechSynthesis.getVoices();
 
     function setVoice() {
         voices = window.speechSynthesis.getVoices();
-        if (voices.length === 0) {
-            setTimeout(setVoice, 100);
-            return;
-        }
-
-        let selectedVoice = voices.find(voice => voice.name.toLowerCase().includes('male')) || voices[0];
+        let selectedVoice = voices.find(v => v.name.toLowerCase().includes('male')) || voices[0];
         text_speak.voice = selectedVoice;
         text_speak.rate = 1;
         text_speak.pitch = 1;
@@ -21,24 +16,20 @@ function speak(text) {
         window.speechSynthesis.speak(text_speak);
     }
 
-    if (voices.length === 0) {
-        window.speechSynthesis.onvoiceschanged = setVoice;
-    } else {
+    if (voices.length > 0) {
         setVoice();
+    } else {
+        window.speechSynthesis.onvoiceschanged = setVoice;
     }
 }
 
 function wishMe() {
-    let day = new Date();
-    let hours = day.getHours();
+    let hours = new Date().getHours();
     let greeting = hours < 12 ? "Good Morning Sir" : hours < 16 ? "Good Afternoon Sir" : "Good Evening Sir";
-
-    if (window.speechSynthesis.getVoices().length > 0) {
-        speak(greeting);
-    } else {
-        window.speechSynthesis.onvoiceschanged = () => speak(greeting);
-    }
+    speak(greeting);
 }
+
+window.speechSynthesis.onvoiceschanged = wishMe;
 window.onload = wishMe;
 
 let speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
