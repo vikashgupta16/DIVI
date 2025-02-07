@@ -15,6 +15,10 @@ You can visit the live version [here](https://vikashgupta16.github.io/DIVI/).
 - **JavaScript** for interactivity
 - [Basic JavaScript used for date time wishMe and speechRecognition]
 
+## Supported Languages 
+*Hindi*
+*English*
+
 ## How To Use
 You must give voice access to your browser so that DIVI can Hear your voice
 If you are uisng in mobile you must give permission to your application for miq.
