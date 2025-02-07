@@ -4,7 +4,7 @@ let voice = document.querySelector("#voice");
 let reloadTimeout;
 
 // Free API Keys (Replace with your own keys)
-const WEATHER_API_KEY = 'your_openweathermap_key'; // Get from https://openweathermap.org/api
+const WEATHER_API_KEY = '87fd3238b1408462c0d6d66cd73135f1'; // Get from https://openweathermap.org/api
 const NEWS_API_KEY = '71f23061c3fe47bd9634278e4962e066'; // Get from https://newsapi.org/
 
 function speak(text) {
