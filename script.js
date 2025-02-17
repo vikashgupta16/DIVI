@@ -12,7 +12,7 @@ function speak(text) {
     text_speak.rate = 1;
     text_speak.pitch = 1;
     text_speak.volume = 1;
-    text_speak.lang = "en-US"; // Changed to English for broader compatibility
+    text_speak.lang = "en-US-male"; // Changed to English for broader compatibility
     text_speak.addEventListener('end', resetInactivityTimer);
     window.speechSynthesis.speak(text_speak);
 }
