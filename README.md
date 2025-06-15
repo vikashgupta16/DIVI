@@ -3,6 +3,12 @@
 Welcome to the **DIVI** repository! This project is a web-based platform designed for [Fun & Voice Gentared Search].
 You can visit the live version [here](https://vikashgupta16.github.io/DIVI/).
 
+## ScreenShots & Video
+
+![Iphone DIVI](assets/iph.png)
+![Mac DIVI](assets/mac.png)
+![Video](assets/Divi.mp4)
+
 ## Features
 - Responsive and user-friendly design
 - [It would reply about iteslf it know or it would take it to you to google web search]

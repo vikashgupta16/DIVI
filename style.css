@@ -21,6 +21,13 @@ body {
     width: 20vw;
     max-width: 150px;
     min-width: 100px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(21, 145, 207, 0.3));
+}
+
+#logo:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(21, 145, 207, 0.6));
 }
 
 h1 {
@@ -66,6 +73,70 @@ h1 {
 #btn:hover {
     box-shadow: 2px 2px 20px rgb(21, 145, 207), 2px 2px 20px rgb(201, 41, 116);
     letter-spacing: 2px;
+}
+
+/* Additional styles for enhanced UX */
+#content {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    min-height: 20px;
+}
+
+.listening {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: #4ecdc4;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.info-message {
+    color: #ffd93d;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.listening-message {
+    color: #6bcf7f;
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
+
+/* Enhanced button states */
+#btn:active {
+    transform: scale(0.98);
+}
+
+#btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* Mobile Styles */
@@ -117,5 +188,21 @@ h1 {
 
     h1 {
         font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 320px) {
+    #name, #va {
+        font-size: 1.5rem;
+    }
+
+    #btn {
+        padding: 12px;
+        font-size: 14px;
+        min-width: 200px;
+    }
+
+    h1 {
+        font-size: 1.1rem;
     }
 }
